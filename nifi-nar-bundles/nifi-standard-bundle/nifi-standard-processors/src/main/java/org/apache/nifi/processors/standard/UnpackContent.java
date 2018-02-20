@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -357,7 +358,7 @@ public class UnpackContent extends AbstractProcessor {
                 @Override
                 public void process(final InputStream in) throws IOException {
                     int fragmentCount = 0;
-                    try (final ZipArchiveInputStream zipIn = new ZipArchiveInputStream(new BufferedInputStream(in))) {
+                    try (final ZipArchiveInputStream zipIn = new ZipArchiveInputStream(new BufferedInputStream(in), StandardCharsets.UTF_8.name(), true, true)) {
                         ArchiveEntry zipEntry;
                         while ((zipEntry = zipIn.getNextEntry()) != null) {
                             if (zipEntry.isDirectory() || !fileMatches(zipEntry)) {
